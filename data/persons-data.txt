@@ -1,9 +1,9 @@
-ROBERTO FREITAS               roberto@freitas.eti.br                                            
-SENADOR VERGUEIRO                       608       T5 AP122                                            
-CENTRO                        SAO BERNARDO                  SP09750000                                   
-WALFREDO FREITAS              teco@freitas.eti.br                                          
-SAO SERAFIM                             766                                                         
-PENHA                         SAO PAULO                     SP03638270                         
-John Doe                      johndoe@example.com                                                 
-Main St                                 456       Apt 789                                        
-Downtown                      Springfield                   IL62704                              
+EUREKA COWORKING              contato@workingsp.com                                            
+Av. Paulista                            2439      SL 1                                             
+BELA VISTA                    SAO PAULO                     SP01310-300                                   
+CREA-SP                       faleconosco@creasp.org.br                                          
+Av. Brigadeiro Faria Lima               105                                                         
+PINHEIROS                     SAO PAULO                     SP01452-920                         
+SERASA                        contato@serasa.com.br                                                 
+Av das Nações Unidas                    1401      24 Andar                                               
+CHACARA SANTO ANTONIO         SAO PAULO                     SP04068-000      

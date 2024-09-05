@@ -16,7 +16,7 @@ or you can use Docker to install a RabbitMQ and MongoDB in containers
 ## Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/text-file-interpreter.git
+    git clone https://github.com/rbt-freitas/text-file-interpreter.git
     cd text-file-interpreter
     ```
 
@@ -46,10 +46,11 @@ To run RabbitMQ and MongoDB using Docker, you can use the following commands:
     ```
 
 ## Usage
-To run the project, use the following command:
-```sh
-cargo run config/cars-config.json data/cars-data.csv no
+To run the project, use the following command: cargo run <config_file> <data_file> <queue>
 
+    ```sh
+    cargo run config/cars-config.json data/cars-data.csv no
+    ```
 
 ## Configuration File Format
 {
@@ -73,17 +74,12 @@ cargo run config/cars-config.json data/cars-data.csv no
     ]
 }
 
-
-## Contributing
-
-Cars origem: https://www.kaggle.com/datasets/lainguyn123/australia-car-market-data
-
-
+## Data files
+The people file data was created by me using google maps data.
+The data of the cars file was extracted from: https://www.kaggle.com/datasets/lainguyn123/australia-car-market-data
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.

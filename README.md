@@ -8,10 +8,7 @@ Before you begin, ensure you have met the following requirements:
 - **Rust**: You need to have Rust installed on your machine. You can download and install Rust from rust-lang.org.
 - **RabbitMQ**: You need to have RabbitMQ installed and running. You can download and install RabbitMQ from rabbitmq.com.
 - **MongoDB**: You need to have MongoDB installed and running. You can download and install MongoDB from mongodb.com.
-
-or you can use Docker to install a RabbitMQ and MongoDB in containers
-
-- **Docker**: You need to have Docker installed to run RabbitMQ and MongoDB in containers. You can download and install Docker from docker.com.
+- **Docker**: Or you can use Docker installed to run RabbitMQ and MongoDB in containers. You can download and install Docker from docker.com.
 
 ## Installation
 1. Clone the repository:

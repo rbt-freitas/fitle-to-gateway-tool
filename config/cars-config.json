@@ -1,0 +1,120 @@
+{
+    "name": "CAR data",
+    "version": 1,
+    "file_type": "csv",
+    "delimiter": ",",
+    "fields": [
+        {
+            "name": "car_code",
+            "description": "Car Code",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_name",
+            "description": "Car Name",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_price",
+            "description": "Car Price",
+            "position": 0,
+            "size": 0,
+            "field_type": "float"
+        },
+        {
+            "name": "car_brand",
+            "description": "Car Brand",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_model_year",
+            "description": "Car Model Year",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_variant",
+            "description": "Car Variant",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_series",
+            "description": "Car Series",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "year_manufacture",
+            "description": "Year of Manufacture",
+            "position": 0,
+            "size": 0,
+            "field_type": "int"
+        },
+        {
+            "name": "gearbpx_type",
+            "description": "Gearbox Type",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "body_design",
+            "description": "Body Design",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "fuel_type",
+            "description": "Fuel Type",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_condition",
+            "description": "Car Condition",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "kilometers",
+            "description": "Kilometers/Mileage",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "engine_capacity",
+            "description": "Engine Capacity",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "car_color",
+            "description": "Car Color",
+            "position": 0,
+            "size": 0,
+            "field_type": "string"
+        },
+        {
+            "name": "seating_capacity",
+            "description": "Seating Capacity",
+            "position": 0,
+            "size": 0,
+            "field_type": "int"
+        }
+    ]
+}

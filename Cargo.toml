@@ -1,0 +1,11 @@
+[package]
+name = "text-file-interpreter"
+authors = ["Roberto Freitas roberto@freitas.eti.br"]
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+lapin = "2.5.0"
+serde = "1.0.209"
+serde_json = "1.0.127"
+tokio = {version = "1.40.0", features = ["full"] }

@@ -1,0 +1,71 @@
+{
+    "name": "Person data",
+    "version": 1,
+    "file_type": "fixed",
+    "delimiter": ",",
+    "fields": [
+        {
+            "name": "name",
+            "description": "Full Name",
+            "position": 1,
+            "size": 30,
+            "field_type": "string"
+        },
+        {
+            "name": "email",
+            "description": "email",
+            "position": 31,
+            "size": 50,
+            "field_type": "string"
+        },
+        {
+            "name": "street_name",
+            "description": "Street Name",
+            "position": 1,
+            "size": 40,
+            "field_type": "string"
+        },
+        {
+            "name": "street_number",
+            "description": "Street Number",
+            "position": 41,
+            "size": 10,
+            "field_type": "string"
+        },
+        {
+            "name": "additional_address",
+            "description": "Addtional Address",
+            "position": 51,
+            "size": 20,
+            "field_type": "string"
+        },
+        {
+            "name": "neighborhood",
+            "description": "Neighborhood",
+            "position": 1,
+            "size": 30,
+            "field_type": "string"
+        },
+        {
+            "name": "city",
+            "description": "City",
+            "position": 31,
+            "size": 30,
+            "field_type": "string"
+        },
+        {
+            "name": "state",
+            "description": "state",
+            "position": 61,
+            "size": 2,
+            "field_type": "string"
+        },
+        {
+            "name": "postal_code",
+            "description": "Postal Code",
+            "position": 63,
+            "size": 8,
+            "field_type": "string"
+        }
+    ]
+}

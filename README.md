@@ -16,20 +16,24 @@ Before you begin, ensure you have met the following requirements:
     ```sh
     git clone https://github.com/rbt-freitas/text-file-interpreter.git
     cd text-file-interpreter
+    ```
 
 2. Set up the environment variables:
     Create a `.env` file in the root of the project and add the following:
     ```env
     AMQP_ADDR=amqp://127.0.0.1:5672/%2f
     MONGODB_URI=mongodb://your_username:your_password@localhost:27017
+    ```
 
-   Or copy the file `.env.example` to `.env` and change the <your_username> and <your_password>:
-   ```bash
-   cp .env.example .env
+    Or copy the file `.env.example` to `.env` and change the <your_username> and <your_password>:
+    ```bash
+    cp .env.example .env
+    ```
 
 3. Build the project:
     ```sh
     cargo build
+    ```
 
 ## Running RabbitMQ and MongoDB with Docker
 To run RabbitMQ and MongoDB using Docker, you can use the following commands:
@@ -37,6 +41,7 @@ To run RabbitMQ and MongoDB using Docker, you can use the following commands:
 1. **RabbitMQ**:
     ```sh
     docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+    ```
 
 2. **MongoDB**:
     ```sh
@@ -46,6 +51,7 @@ To run RabbitMQ and MongoDB using Docker, you can use the following commands:
         -e MONGO_INITDB_ROOT_PASSWORD=<your_password> \
         -p 27017:27017 \
         mongo
+    ```
 
 3. **Mongo Express**
     ```sh
@@ -57,11 +63,13 @@ To run RabbitMQ and MongoDB using Docker, you can use the following commands:
         -e ME_CONFIG_MONGODB_SERVER=mongo \
         -p 8081:8081 \
         mongo-express
+    ```
 
 ## Usage
 To run the project, use the following command: cargo run <config_file> <data_file> <queue>
     ```sh
     cargo run config/cars-config.json data/cars-data.csv
+    ```
 
 ## Configuration File Format
 In this repository there are 2 examples of configuration file, its basic structure is:
@@ -84,7 +92,7 @@ In this repository there are 2 examples of configuration file, its basic structu
             },
         ]
     }
-
+    ```
 ## Data files
 The people file data was created by me using google maps data.
 The data of the cars file was extracted from: https://www.kaggle.com/datasets/lainguyn123/australia-car-market-data

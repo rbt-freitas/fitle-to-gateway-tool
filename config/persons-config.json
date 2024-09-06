@@ -3,6 +3,8 @@
     "version": 1,
     "file_type": "fixed",
     "delimiter": ",",
+    "destination": "repository",
+    "storage_name": "person_data",
     "fields": [
         {
             "name": "name",

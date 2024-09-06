@@ -3,6 +3,8 @@
     "version": 1,
     "file_type": "csv",
     "delimiter": ",",
+    "destination": "repository",
+    "storage_name": "car_data",
     "fields": [
         {
             "name": "car_code",

@@ -7,6 +7,11 @@ use std::io::BufReader;
 use serde::{Serialize, Deserialize};
 use serde_json::json;
 use lapin::{options::*, types::FieldTable, BasicProperties, Connection, ConnectionProperties};
+use log::{info, error};
+use env_logger;
+use dotenv::dotenv;
+use mongodb::{Client, options::ClientOptions};
+use mongodb::bson::Document;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Layout {
@@ -14,6 +19,8 @@ struct Layout {
     version: usize,
     delimiter: Option<char>, 
     file_type: String,
+    destination: String, 
+    storage_name: String, 
     fields: Vec<Field>,
 }
 
@@ -132,7 +139,6 @@ fn read_fixed_data(file_name: &str, layout: &Layout) -> Vec<Record> {
             if field.position < current_pos {
                 if let Some(next_line) = lines.next() {
                     current_line = next_line.expect("Unable to read line");
-                    current_pos = 0;
                 } else {
                     break;
                 }
@@ -164,23 +170,23 @@ fn read_fixed_data(file_name: &str, layout: &Layout) -> Vec<Record> {
 /// ```
 /// send_to_queue(&json_output);
 /// ```
-async fn send_to_queue(json_output: &str) {
-    let addr = std::env::var("AMQP_ADDR").unwrap_or_else(|_|"amqp://127.0.0.1:5672/%2f".into());
+async fn send_to_queue(json_output: &str, queue_name: &str) {
+    let addr = std::env::var("AMQP_ADDR").expect("AMQP_ADDR not set in .env file");
     let conn = Connection::connect(&addr, ConnectionProperties::default()).await.expect("Connection error");
 
     let channel = conn.create_channel().await.expect("Create channel error");
-    channel.queue_declare("records"
+    channel.queue_declare(queue_name
                          , QueueDeclareOptions::default()
                          , FieldTable::default(),
     ).await.expect("Queue declare error");
 
     channel.basic_publish(""
-                         , "records"
+                         , queue_name
                          , BasicPublishOptions::default()
                          , json_output.as_bytes()
                          , BasicProperties::default().with_delivery_mode(1),
     ).await.expect("Basic publish error");
-
+    info!("Sent records to RabbitMQ queue: {}", queue_name);
 }
 
 /// Saves the JSON output to a MongoDB database.
@@ -194,22 +200,36 @@ async fn send_to_queue(json_output: &str) {
 /// ```
 /// save_to_mongodb(&json_output);
 /// ```
-fn save_to_mongodb(json_output: &str) {
-    // Implement the logic to save the JSON output to a MongoDB database
+async fn save_to_mongodb(json_output: &str, collection_name: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let client_options = ClientOptions::parse(&env::var("MONGODB_URI").expect("MONGODB_URI not set in .env file")).await?;
+    let client = Client::with_options(client_options)?;
+    let database = client.database("mydb");
+    let collection = database.collection::<Document>(collection_name);
+
+    let docs: Vec<mongodb::bson::Document> = serde_json::from_str(json_output)?;
+    match collection.insert_many(docs, None).await {
+        Ok(_) => {
+            info!("Saved records to MongoDB collection: {}", collection_name);
+            Ok(())
+        },
+        Err(e) => Err(Box::new(e))
+    }
 }
 
 #[tokio::main]
 async fn main() {
+    env_logger::init();
+    dotenv().ok();
+
     // Check parameters
     if env::args().len() < 2 {
-        println!("Program requires two arguments <layout file> <data file>");
+        error!("Program requires two arguments <layout file> <data file>");
         return
     }
 
     // Reading the parameters
     let layout_file: String = env::args().nth(1).unwrap();
     let data_file: String = env::args().nth(2).unwrap();
-    let send_records_to_queue: String = env::args().nth(3).unwrap();
 
     // Reads configuration and data files
     let layout = read_config_json(&layout_file).expect("Unable to read layout file");
@@ -219,22 +239,34 @@ async fn main() {
     } else if layout.file_type == "fixed" {
         read_fixed_data(&data_file, &layout)
     } else {
-        println!("Undefined file type");
+        error!("Undefined file type");
         return;
     };
     
     // Convert records to json format
     let json_records: Vec<_> = records.iter().map(|record| json!(record.fields)).collect();
     let json_output = serde_json::to_string_pretty(&json_records).unwrap();
-    println!("{}", json_output);
+    println!("Processed records: {}", json_output);
     
-    if send_records_to_queue == "yes" {
-        // Convert records to JSON format and send to RabbitMQ queue
-        println!("Sent records to RabbitMQ queue");
-        for record in records {
-            let json_record = serde_json::to_string(&record.fields).unwrap();
-            send_to_queue(&json_record).await;
+    // Convert records to JSON format and send to RabbitMQ queue
+    match layout.destination.as_str() {
+        "queue" => {
+            for record in records {
+                let json_record = serde_json::to_string(&record.fields).unwrap();
+                send_to_queue(&json_record, &layout.storage_name).await;
+            }    
+        }, 
+        "both" => {
+            for record in records {
+                let json_record = serde_json::to_string(&record.fields).unwrap();
+                send_to_queue(&json_record, &layout.storage_name).await;
+            };    
+            save_to_mongodb(&json_output, &layout.storage_name).await.unwrap();
         }
+        "repository" => {
+            save_to_mongodb(&json_output, &layout.storage_name).await.unwrap();
+        },
+        _ => error!("Invalid destination specified in config file")
     }
 
 }

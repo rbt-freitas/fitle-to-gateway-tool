@@ -1,7 +1,7 @@
-# Text File Interpreter
+# File To Gateway Tool
 
 ## Project Description
-The Text File Interpreter is a Rust-based project that reads data from various file formats (CSV, fixed-width text files) and publishes the data to a RabbitMQ queue or stores it in a MongoDB collection. This project is designed to handle different data types and configurations, making it flexible and adaptable to various use cases.
+The File To Gateway Tool is a Rust-based project that reads data from various file formats (CSV, fixed-width text files) and publishes the data to a RabbitMQ queue or stores it in a MongoDB collection. This project is designed to handle different data types and configurations, making it flexible and adaptable to various use cases.
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:

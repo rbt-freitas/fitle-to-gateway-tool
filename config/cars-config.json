@@ -1,7 +1,7 @@
 {
     "name": "CAR data",
     "version": 1,
-    "file_type": "delimited",
+    "file_type": "Delimited",
     "delimiter": ",",
     "destination": "queue",
     "storage_name": "car_data",

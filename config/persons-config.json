@@ -1,7 +1,7 @@
 {
     "name": "Person data",
     "version": 1,
-    "file_type": "fixed",
+    "file_type": "Fixed",
     "delimiter": ",",
     "destination": "repository",
     "storage_name": "person_data",

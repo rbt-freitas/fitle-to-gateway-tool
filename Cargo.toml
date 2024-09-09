@@ -1,5 +1,5 @@
 [package]
-name = "file-to-data-service"
+name = "file-to-gateway-tool"
 authors = ["Roberto Freitas roberto@freitas.eti.br"]
 version = "0.1.0"
 edition = "2021"

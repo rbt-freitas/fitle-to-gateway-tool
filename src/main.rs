@@ -267,7 +267,7 @@ async fn main() {
     // Convert records to json format
     let json_records: Vec<_> = records.iter().map(|record| json!(record.fields)).collect();
     let json_output = serde_json::to_string_pretty(&json_records).unwrap();
-    println!("Processed records: {}", json_output);
+    println!("Processed records: {}", json_records.len().clone());
     
     // Convert records to JSON format and send to RabbitMQ queue
     match layout.destination.as_str() {
@@ -277,13 +277,6 @@ async fn main() {
                 send_to_queue(&json_record, &layout.storage_name).await;
             }    
         }, 
-        "both" => {
-            for record in records {
-                let json_record = serde_json::to_string(&record.fields).unwrap();
-                send_to_queue(&json_record, &layout.storage_name).await;
-            };    
-            save_to_mongodb(&json_output, &layout.storage_name).await.unwrap();
-        }
         "repository" => {
             save_to_mongodb(&json_output, &layout.storage_name).await.unwrap();
         },

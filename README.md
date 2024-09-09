@@ -66,7 +66,7 @@ To run RabbitMQ and MongoDB using Docker, you can use the following commands:
     ```
 
 ## Usage
-To run the project, use the following command: cargo run <config_file> <data_file> <queue>
+To run the project, use the following command: cargo run <config_file> <data_file>
     ```sh
     cargo run config/cars-config.json data/cars-data.csv
     ```

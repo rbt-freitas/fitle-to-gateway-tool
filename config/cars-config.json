@@ -1,9 +1,9 @@
 {
     "name": "CAR data",
     "version": 1,
-    "file_type": "csv",
+    "file_type": "delimited",
     "delimiter": ",",
-    "destination": "repository",
+    "destination": "queue",
     "storage_name": "car_data",
     "fields": [
         {

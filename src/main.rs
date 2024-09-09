@@ -1,3 +1,18 @@
+/*!
+ * # Text-File-Interpreter
+ * 
+ * # Author: 
+ * 
+ * Roberto Freitas
+ * 
+ * # Description: 
+ * 
+ * The Text File Interpreter is a Rust-based project that reads data from various file 
+ * formats (CSV, fixed-width text files) and publishes the data to a RabbitMQ queue or 
+ * stores it in a MongoDB collection. This project is designed to handle different data 
+ * types and configurations, making it flexible and adaptable to various use cases.
+ *
+ */
 use std::env;
 use std::error::Error;
 use std::fs;
@@ -14,11 +29,17 @@ use mongodb::{Client, options::ClientOptions};
 use mongodb::bson::Document;
 
 #[derive(Serialize, Deserialize, Debug)]
+enum FieldType {
+    Fixed,
+    Delimited, 
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 struct Layout {
     name: String,
     version: usize,
     delimiter: Option<char>, 
-    file_type: String,
+    file_type: FieldType,
     destination: String, 
     storage_name: String, 
     fields: Vec<Field>,
@@ -74,7 +95,7 @@ fn read_config_json(file_name: &str) -> Result<Layout, Box<dyn Error>> {
 /// # Example
 /// 
 /// ```
-/// let records = read_csv_data("data.csv", "layout.txt", ",");
+/// let records = read_csv_data("data.csv", "layout.txt");
 /// ```
 /// 
 fn read_csv_data(file_name: &str, layout: &Layout) -> Vec<Record> {
@@ -83,7 +104,7 @@ fn read_csv_data(file_name: &str, layout: &Layout) -> Vec<Record> {
     let mut records = Vec::new();
     let delimiter = layout.delimiter.unwrap_or(',');
 
-    for (line_number, line) in reader.lines().enumerate() {
+    for line in reader.lines() {
         let line = line.expect("Unable to read line");
         let mut fields = HashMap::new();
         let values: Vec<&str> = line.split(delimiter).collect();
@@ -234,13 +255,13 @@ async fn main() {
     // Reads configuration and data files
     let layout = read_config_json(&layout_file).expect("Unable to read layout file");
 
-    let records = if layout.file_type == "csv" {
-        read_csv_data(&data_file, &layout)
-    } else if layout.file_type == "fixed" {
-        read_fixed_data(&data_file, &layout)
-    } else {
-        error!("Undefined file type");
-        return;
+    let records = match layout.file_type {
+        FieldType::Delimited => {
+            read_csv_data(&data_file, &layout) 
+        },
+        FieldType::Fixed => {
+            read_fixed_data(&data_file, &layout)
+        }
     };
     
     // Convert records to json format

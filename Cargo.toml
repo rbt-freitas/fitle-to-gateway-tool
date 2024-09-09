@@ -1,5 +1,5 @@
 [package]
-name = "text-file-interpreter"
+name = "file-to-data-service"
 authors = ["Roberto Freitas roberto@freitas.eti.br"]
 version = "0.1.0"
 edition = "2021"
